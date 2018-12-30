@@ -1,0 +1,91 @@
+// xxxxxxxxxxxxxxxxxxxxxxxxxx
+// General Purpose Classes
+// xxxxxxxxxxxxxxxxxxxxxxxxxx
+@import url('https://fonts.googleapis.com/css?family=Arimo:400,700');
+
+$primary-colour: #A1D6E2;
+$primary-heavy:  #1995AD;
+$background-colour: #F1F1F2;
+$background-heavy: #BCBABE;
+
+@mixin box-shadow($top, $left, $blur, $color, $inset: false) {
+    @if $inset {
+        -webkit-box-shadow:inset $top $left $blur $color;
+        -moz-box-shadow:inset $top $left $blur $color;
+        box-shadow:inset $top $left $blur $color;
+    } @else {
+        -webkit-box-shadow: $top $left $blur $color;
+        -moz-box-shadow: $top $left $blur $color;
+        box-shadow: $top $left $blur $color;
+    }
+}
+
+body{
+    font-family: 'Arimo', sans-serif;
+}
+
+.warning{
+    background-color: #af1d1d;
+    color: #fff;
+    padding: 15px;
+}
+
+input[type=text],
+input[type=password] {
+    box-sizing : border-box;
+}
+
+// xxxxxxxxxxxxxxxxxxxxxxxxxx
+// Notification panel classes
+// xxxxxxxxxxxxxxxxxxxxxxxxxx
+
+.notification-panel, .server-panel, .server-options-panel{
+    padding: 20px 16vw;
+    div{ margin: 10px 0px; }
+}
+
+.input-area{
+    .input-row{
+        label{
+            display: block;
+            margin-bottom: 5px;
+        }
+        input{
+            display: inline-block;
+            width: 100%;
+        }
+    }
+}
+
+.notification-panel{ background-color: $primary-colour; }
+.server-url{
+    input{ width: 50%; }
+}
+
+//
+
+.video-wrapper{
+    background-color: $background-colour;
+}
+
+// xxxxxxxxxxxxxxxxxxxxxxxxxx
+// Button Styles
+// xxxxxxxxxxxxxxxxxxxxxxxxxx
+
+button{
+    border: none;
+    color: #fff;
+    &:hover{ cursor: pointer; }
+}
+
+input{padding: 5px;}
+
+.solid{
+    @include box-shadow(0, 3px, 4px, #aaa);
+    background-color: #000;
+    padding: 10px 30px;
+    &:hover{
+        @include box-shadow(0, 3px, 7px, #555);
+        background-color: $primary-heavy;
+    }
+}
