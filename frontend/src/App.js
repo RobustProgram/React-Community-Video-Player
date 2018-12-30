@@ -25,8 +25,10 @@ class Notification extends Component {
 
     render() {
         return (
-            <div className="notification-panel">
-                <strong>NOTIFICATION</strong> {this.state.notification}
+            <div className="notification-panel-wrapper">
+                <div className="notification-panel">
+                    <strong>NOTIFICATION</strong> {this.state.notification}
+                </div>
             </div>
         );
     }
@@ -67,6 +69,44 @@ class ServerOptions extends Component {
     }
 }
 
+class Footer extends Component {
+    render() {
+        return(
+            <footer>
+                <p className="text-title">
+                    About This Project
+                </p>
+                <p className="text-paragraph">
+                    This project allows you as the user to create a room where
+                    you can invite your friends to join to watch a video together.
+                    This room allows you to sync the videos using a button so
+                    everyone can watch the video at the same time.
+                </p>
+                <p className="text-paragraph">
+                    This project will be worked on to expanded to include other
+                    functionality such as,
+                    <ul>
+                        <li>Room leader as an option!</li>
+                        <li>Option to allow the room to sync pausing and playing</li>
+                        <li>Integrate a chat room</li>
+                    </ul>
+                    Current Version: 0.1.0. Copyright &copy; 2019
+                </p>
+            </footer>
+        );
+    }
+}
+
+class Header extends Component {
+    render() {
+        return(
+            <header>
+                JARP REACT COMMUNITY VIDEO PLAYER
+            </header>
+        );
+    }
+}
+
 class App extends Component {
     constructor(props) {
         super(props);
@@ -103,17 +143,17 @@ class App extends Component {
     }
 
     render() {
+        const SEPARATOR = " ";
         let serverPanel = null;
 
         if (this.state.serverID !== "") {
             serverPanel =
             <div className="server-panel">
-                <div className="server-id">Connected ServerID: {this.state.serverID}</div>
                 <div className="server-url">
-                    Video URL:
-                    &nbsp;
+                    Video URL
+                    {SEPARATOR}
                     <input id="videoURL" type="text" name="videoURL"/>
-                    &nbsp;
+                    {SEPARATOR}
                     <button className="solid" onClick={this.setVideoURL.bind(this)}>
                         Load Video URL
                     </button>
@@ -134,7 +174,7 @@ class App extends Component {
                 <button className="solid" onClick={this.onForceUpdate.bind(this)}>
                     Force Update
                 </button>
-                &nbsp;
+                {SEPARATOR}
                 <button className="solid" onClick={this.onLeaveServer.bind(this)}>
                     Leave Server
                 </button>
@@ -145,8 +185,10 @@ class App extends Component {
 
         return (
             <div>
+                <Header />
                 <Notification />
                 {serverPanel}
+                <Footer />
             </div>
         );
     }

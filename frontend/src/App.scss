@@ -1,7 +1,7 @@
 // xxxxxxxxxxxxxxxxxxxxxxxxxx
 // General Purpose Classes
 // xxxxxxxxxxxxxxxxxxxxxxxxxx
-@import url('https://fonts.googleapis.com/css?family=Arimo:400,700');
+@import url('https://fonts.googleapis.com/css?family=Quicksand:400,700');
 
 $primary-colour: #A1D6E2;
 $primary-heavy:  #1995AD;
@@ -20,9 +20,7 @@ $background-heavy: #BCBABE;
     }
 }
 
-body{
-    font-family: 'Arimo', sans-serif;
-}
+body{ font-family: 'Quicksand', sans-serif; }
 
 .warning{
     background-color: #af1d1d;
@@ -35,14 +33,58 @@ input[type=password] {
     box-sizing : border-box;
 }
 
+.text-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.text-paragraph { font-size: 13px; }
+
+// xxxxxxxxxxxxxxxxxxxxxxxxxx
+// Header Class
+// xxxxxxxxxxxxxxxxxxxxxxxxxx
+
+header{
+    background-color: $primary-heavy;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 30px;
+}
+
+// xxxxxxxxxxxxxxxxxxxxxxxxxx
+// Footer Class
+// xxxxxxxxxxxxxxxxxxxxxxxxxx
+
+footer {
+    background-color: $background-heavy;
+    padding: 15px 30px;
+    margin: auto;
+    margin-top: 5vh;
+    max-width: 1300px;
+}
+
 // xxxxxxxxxxxxxxxxxxxxxxxxxx
 // Notification panel classes
 // xxxxxxxxxxxxxxxxxxxxxxxxxx
 
 .notification-panel, .server-panel, .server-options-panel{
-    padding: 20px 16vw;
+    max-width: 1300px;
+    margin: auto;
+    padding: 0vh 3vw;
     div{ margin: 10px 0px; }
 }
+
+.server-options-panel{margin-top: 5vh;}
+
+.notification-panel-wrapper{
+    background-color: $primary-colour;
+    padding: 20px;
+    text-align: center;
+}
+
+.server-panel{text-align: center;}
 
 .input-area{
     .input-row{
@@ -57,16 +99,11 @@ input[type=password] {
     }
 }
 
-.notification-panel{ background-color: $primary-colour; }
-.server-url{
-    input{ width: 50%; }
-}
+.server-url{ input{ width: 50%; } }
 
 //
 
-.video-wrapper{
-    background-color: $background-colour;
-}
+.video-wrapper{background-color: $background-colour;}
 
 // xxxxxxxxxxxxxxxxxxxxxxxxxx
 // Button Styles
@@ -75,6 +112,7 @@ input[type=password] {
 button{
     border: none;
     color: #fff;
+    font-family: 'Quicksand', sans-serif;
     &:hover{ cursor: pointer; }
 }
 
