@@ -25,6 +25,10 @@ input[type=password] {
     font-size: 13px;
 }
 
+.error-msg {
+    color: #af1d1d;
+}
+
 header {
     background-color: #1995AD;
     color: white;

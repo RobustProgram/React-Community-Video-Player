@@ -18,6 +18,11 @@ io.on("connection", async (socket) => {
     socket.on("createserver", async (message) => {
         console.log("Socket wants to create or join a server!");
 
+        if (message["serverName"] === ""){
+            console.log("Received a blank name for the server. Ignoring ...");
+            return;
+        }
+
         if (message["serverName"] in serverPasswordMap) {
             if (message["serverPass"] == serverPasswordMap[message["serverName"]]) {
                 socket.join( message["serverName"] );

@@ -14,6 +14,8 @@ import ReactPlayer from 'react-player'
 
 library.add(faExclamationCircle);
 
+const VERSION = "0.2.4";
+
 class Notification extends Component {
     constructor(props) {
         super(props);
@@ -35,13 +37,29 @@ class Notification extends Component {
 }
 
 class ServerOptions extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            error: false,
+            errorMsg: ""
+        };
+    }
+
     onCreateServer() {
         let serverName = document.getElementById("servername").value;
         let serverPass = document.getElementById("serverpassword").value;
-        createServer({serverName: serverName, serverPass: serverPass});
+
+        if (serverName !== "")
+            createServer({serverName: serverName, serverPass: serverPass});
+        else
+            this.setState({error: true, errorMsg: "*You can not have a blank server name!"});
     }
 
     render() {
+        let errorMsg = null;
+        if (this.state.error)
+            errorMsg = <div className="error-msg">{this.state.errorMsg}</div>
+
         return (
             <div className="server-options-panel">
                 <div className="warning">
@@ -49,6 +67,7 @@ class ServerOptions extends Component {
                     Warning! The password is not encrypted and is just a
                     temporary passphrase to prevent random joins.
                 </div>
+                {errorMsg}
                 <div className="input-area">
                     <div className="input-row">
                         <label for="servername">Server Name</label>
@@ -90,7 +109,7 @@ class Footer extends Component {
                         <li>Option to allow the room to sync pausing and playing</li>
                         <li>Integrate a chat room</li>
                     </ul>
-                    <strong>Current Version: 0.2.3. Copyright &copy; 2019</strong>
+                    <strong>Current Version: {VERSION} Copyright &copy; 2019</strong>
                 </p>
             </footer>
         );
@@ -144,6 +163,11 @@ class App extends Component {
         updateVideo({videoSeconds: videoSeconds, videoDuration:videoDuration});
     }
 
+    handleEnterKey(event) {
+        if(event.key === "Enter")
+            setVideoURL();
+    }
+
     componentDidUpdate(prevProps, prevState){
         // Once the components updates so that we are able to include the video
         // player and its wrapper. We can then dynamically calculate the size
@@ -156,7 +180,7 @@ class App extends Component {
             // The getPropertyValue returns the width in "(number)px" use parseInt
             // to extract the numeric value.
             let videoWidth = parseInt(serverPanelStyle.getPropertyValue("width"));
-            if (prevState.width != videoWidth){
+            if (prevState.width !== videoWidth){
                 let videoHeight = videoWidth * (9/16);
                 this.setState({
                     "width" : videoWidth,
@@ -171,6 +195,7 @@ class App extends Component {
         let serverPanel = null;
 
         if (this.state.serverID !== "") {
+            document.addEventListener("keydown", this.handleEnterKey, false);
             serverPanel =
             <div id="server-panel" className="server-panel">
                 <div className="server-url">
@@ -204,6 +229,7 @@ class App extends Component {
                 </button>
             </div>;
         } else {
+            document.removeEventListener("keydown", this.handleEnterKey, false);
             serverPanel = <ServerOptions />;
         }
 
