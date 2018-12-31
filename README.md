@@ -6,7 +6,8 @@ the frontend and backend communicate, they both use Socket.IO to achieve this
 goal.
 
 #### How to Run?
-Docker support is being currently added to this project to make running the
-project easy.
+Cd into the project root and run the command `docker-compose up`. You will need
+to have both `docker` and `docker-compose` installed in order for this to work.
 
-##### Version 0.1.0
+##### Version 0.2.0
+ - Added Docker support
