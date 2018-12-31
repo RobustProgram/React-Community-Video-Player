@@ -9,5 +9,5 @@ goal.
 Cd into the project root and run the command `docker-compose up`. You will need
 to have both `docker` and `docker-compose` installed in order for this to work.
 
-##### Version 0.2.0
+##### Version 0.2.1
  - Added Docker support

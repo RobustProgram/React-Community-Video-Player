@@ -94,6 +94,6 @@ io.on("connection", async (socket) => {
 })
 
 
-server.listen(5000, () => {
+server.listen(5000, '0.0.0.0', () => {
     console.log("Backend Server running on http://localhost:5000");
 });

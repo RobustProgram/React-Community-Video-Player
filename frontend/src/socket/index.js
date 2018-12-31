@@ -1,5 +1,5 @@
 import openSocket from "socket.io-client";
-const socket = openSocket();
+const socket = openSocket("ws://backend:5000");
 
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 // Getting updated by the server
