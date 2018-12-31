@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 room.
 - Fixed a bug that did not reset the video player after the user left the room.
 
+## [0.2.1]
+### Added
+- Docker support
+
 ## [0.2.0]
 ### Added
 - First release of the working website
