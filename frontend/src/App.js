@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 // FontAwesome imports
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons'
+import { faExclamationCircle, faBell } from '@fortawesome/free-solid-svg-icons'
 // Developer Externals
 import './App.min.css';
 import {
@@ -13,6 +13,7 @@ import {
 import ReactPlayer from 'react-player'
 
 library.add(faExclamationCircle);
+library.add(faBell);
 
 const VERSION = "0.2.4";
 
@@ -29,7 +30,7 @@ class Notification extends Component {
         return (
             <div className="notification-panel-wrapper">
                 <div className="notification-panel">
-                    <strong>NOTIFICATION</strong> {this.state.notification}
+                    <strong>Notification</strong>&nbsp; {this.state.notification}
                 </div>
             </div>
         );
@@ -165,7 +166,7 @@ class App extends Component {
 
     handleEnterKey(event) {
         if(event.key === "Enter")
-            setVideoURL();
+            this.setVideoURL();
     }
 
     componentDidUpdate(prevProps, prevState){
@@ -195,7 +196,7 @@ class App extends Component {
         let serverPanel = null;
 
         if (this.state.serverID !== "") {
-            document.addEventListener("keydown", this.handleEnterKey, false);
+            document.addEventListener("keydown", this.handleEnterKey.bind(this), false);
             serverPanel =
             <div id="server-panel" className="server-panel">
                 <div className="server-url">
@@ -229,7 +230,7 @@ class App extends Component {
                 </button>
             </div>;
         } else {
-            document.removeEventListener("keydown", this.handleEnterKey, false);
+            document.removeEventListener("keydown", this.handleEnterKey.bind(this), false);
             serverPanel = <ServerOptions />;
         }
 

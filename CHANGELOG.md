@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.5] - 2018-12-31
+### Added
+- When user joins a room, they will be updated to watch that video.
+- Added icons to the frontpage inputs.
+
 ## [0.2.4] - 2018-12-31
 ### Added
 - Ability to update the video URL via hitting an Enter key.

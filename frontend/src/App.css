@@ -29,6 +29,27 @@ input[type=password] {
     color: #af1d1d;
 }
 
+.notify-bell {
+    padding: 4px;
+}
+
+input {
+    border: 1px solid #777;
+    padding: 10px;
+}
+
+#servername, #serverpassword {
+    padding-left: 42px;
+}
+
+#servername {
+    background: no-repeat center left 4px/32px url("images/dog-tag.png");
+}
+
+#serverpassword {
+    background: no-repeat center left 8px/24px url("images/key.png");
+}
+
 header {
     background-color: #1995AD;
     color: white;
@@ -96,10 +117,6 @@ button {
 
 button:hover {
     cursor: pointer;
-}
-
-input {
-    padding: 5px;
 }
 
 .solid {

@@ -45,6 +45,20 @@ input[type=password] {
 
 .text-paragraph { font-size: 13px; }
 .error-msg{color: $primary-red;}
+.notify-bell{
+    padding: 4px;
+}
+
+// xxxxxxxxxxxxxxxxxxxxxxxxxx
+// Server options panel
+// xxxxxxxxxxxxxxxxxxxxxxxxxx
+input {
+    border: 1px solid #777;
+    padding:10px;
+}
+#servername, #serverpassword{padding-left: 42px;}
+#servername{background: no-repeat center left 4px/32px url("images/dog-tag.png") ;}
+#serverpassword{background: no-repeat center left 8px/24px url("images/key.png") ;}
 
 // xxxxxxxxxxxxxxxxxxxxxxxxxx
 // Header Class
@@ -121,8 +135,6 @@ button{
     font-family: 'Quicksand', sans-serif;
     &:hover{ cursor: pointer; }
 }
-
-input{padding: 5px;}
 
 .solid{
     @include box-shadow(0, 3px, 4px, #aaa);

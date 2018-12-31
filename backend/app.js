@@ -8,6 +8,7 @@ const io = require("socket.io")(server);
 let serverUIDMap = {};
 let serverPasswordMap = {};
 let serverNumbersMap = {};
+let serverVideoMap = {};
 
 // Enable CORS
 io.set("origins", "*:*");
@@ -28,19 +29,23 @@ io.on("connection", async (socket) => {
                 socket.join( message["serverName"] );
                 serverUIDMap[socket.rooms[socket.id]] = message["serverName"];
                 serverNumbersMap[message["serverName"]] =+ 1;
-                // Notify the users
+                // Notify the room clients
                 io.to(message["serverName"]).emit('notify', "A user has joined the room!");
+                // Now notify the user
                 io.to(socket.id).emit("notify", "You joined the room " + message["serverName"]);
                 io.to(socket.id).emit("confirmserver", message["serverName"]);
+                io.to(socket.id).emit("confirmvideo", serverVideoMap[message["serverName"]]);
             } else {
                 io.to(socket.id).emit("notify", "Wrong passphrase.");
             }
         } else {
-            // Allocate the variables
+            // This section of code will run for the initial creation of the room
+            // so everything in this section of code should be initialisers.
             serverPasswordMap[message["serverName"]] = message["serverPass"];
             socket.join( message["serverName"] );
             serverUIDMap[socket.rooms[socket.id]] = message["serverName"];
             serverNumbersMap[message["serverName"]] = 1;
+            serverVideoMap[message["serverName"]] = "";
             // Notify the users
             io.to(message["serverName"]).emit('notify', "A user has joined the room!");
             io.to(socket.id).emit("notify", "You joined the room " + message["serverName"]);
@@ -62,6 +67,7 @@ io.on("connection", async (socket) => {
                 delete serverUIDMap[roomUID];
                 delete serverNumbersMap[roomName];
                 delete serverPasswordMap[roomName];
+                delete serverVideoMap[roomName];
             }
             socket.leave(roomName);
         }
@@ -94,6 +100,7 @@ io.on("connection", async (socket) => {
         console.log("Load video to the room");
         let roomUID = socket.rooms[socket.id];
         let roomName = serverUIDMap[roomUID];
+        serverVideoMap[roomName] = message;
         io.to(roomName).emit("confirmvideo", message);
         io.to(roomName).emit('notify', "Loading new video!");
     })
