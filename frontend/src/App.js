@@ -90,7 +90,7 @@ class Footer extends Component {
                         <li>Option to allow the room to sync pausing and playing</li>
                         <li>Integrate a chat room</li>
                     </ul>
-                    Current Version: 0.1.0. Copyright &copy; 2019
+                    <strong>Current Version: 0.2.3. Copyright &copy; 2019</strong>
                 </p>
             </footer>
         );
@@ -113,7 +113,9 @@ class App extends Component {
         this.state = {
             "serverID" : "",
             "videoURL" : "",
-            "playing" : "true"
+            "playing" : true,
+            "width" : "1280px",
+            "height" : "720px",
         };
         this.videoPlayer = React.createRef();
 
@@ -125,7 +127,7 @@ class App extends Component {
         });
     }
 
-    setVideoURL(){
+    setVideoURL() {
         // Set a request to the server to update the video.
         let videoURL = document.getElementById("videoURL").value;
         loadVideo(videoURL);
@@ -133,7 +135,7 @@ class App extends Component {
 
     onLeaveServer() {
         leaveServer();
-        this.setState({"serverID" : ""});
+        this.setState({"serverID" : "", "videoURL" : ""});
     }
 
     onForceUpdate() {
@@ -142,13 +144,35 @@ class App extends Component {
         updateVideo({videoSeconds: videoSeconds, videoDuration:videoDuration});
     }
 
+    componentDidUpdate(prevProps, prevState){
+        // Once the components updates so that we are able to include the video
+        // player and its wrapper. We can then dynamically calculate the size
+        // of the wrapper and reshape it to fix the user's window.
+        let serverPanelDiv = document.getElementById("server-panel");
+
+        // Check if the wrapper exists
+        if (serverPanelDiv != null) {
+            let serverPanelStyle = window.getComputedStyle(serverPanelDiv, null);
+            // The getPropertyValue returns the width in "(number)px" use parseInt
+            // to extract the numeric value.
+            let videoWidth = parseInt(serverPanelStyle.getPropertyValue("width"));
+            if (prevState.width != videoWidth){
+                let videoHeight = videoWidth * (9/16);
+                this.setState({
+                    "width" : videoWidth,
+                    "height" : videoHeight,
+                });
+            }
+        }
+    }
+
     render() {
         const SEPARATOR = " ";
         let serverPanel = null;
 
         if (this.state.serverID !== "") {
             serverPanel =
-            <div className="server-panel">
+            <div id="server-panel" className="server-panel">
                 <div className="server-url">
                     Video URL
                     {SEPARATOR}
@@ -162,9 +186,9 @@ class App extends Component {
                     ref={this.videoPlayer}
                     className="video-wrapper"
                     url={this.state.videoURL}
-                    width="1280px"
-                    height="720px"
-                    controls="true"
+                    width={this.state.width}
+                    height={this.state.height}
+                    controls={true}
                     playing={this.state.playing}
                 />
                 <div className="video-controls">

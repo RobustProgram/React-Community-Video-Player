@@ -21,6 +21,7 @@ io.on("connection", async (socket) => {
         if (message["serverName"] in serverPasswordMap) {
             if (message["serverPass"] == serverPasswordMap[message["serverName"]]) {
                 socket.join( message["serverName"] );
+                serverUIDMap[socket.rooms[socket.id]] = message["serverName"];
                 serverNumbersMap[message["serverName"]] =+ 1;
                 // Notify the users
                 io.to(message["serverName"]).emit('notify', "A user has joined the room!");

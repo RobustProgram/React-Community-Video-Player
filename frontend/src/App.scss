@@ -20,7 +20,11 @@ $background-heavy: #BCBABE;
     }
 }
 
-body{ font-family: 'Quicksand', sans-serif; }
+body{
+    font-family: 'Quicksand', sans-serif;
+    margin: 0px;
+    padding: 0px;
+}
 
 .warning{
     background-color: #af1d1d;
