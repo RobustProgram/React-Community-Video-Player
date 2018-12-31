@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - When user joins a room, they will be updated to watch that video.
 - Added icons to the frontpage inputs.
+- Attributions
 
 ## [0.2.4] - 2018-12-31
 ### Added

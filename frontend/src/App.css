@@ -43,11 +43,11 @@ input {
 }
 
 #servername {
-    background: no-repeat center left 4px/32px url("images/dog-tag.png");
+    background: no-repeat center left 12px/24px url("images/dog-tag.png");
 }
 
 #serverpassword {
-    background: no-repeat center left 8px/24px url("images/key.png");
+    background: no-repeat center left 16px/16px url("images/key.png");
 }
 
 header {
@@ -60,11 +60,29 @@ header {
 }
 
 footer {
-    background-color: #BCBABE;
-    padding: 15px 30px;
+    background-color: #E4E4E5;
     margin: auto;
     margin-top: 5vh;
     max-width: 1300px;
+}
+
+footer .footer-content, footer .footer-footer {
+    padding: 15px 30px;
+}
+
+footer .footer-footer {
+    background-color: black;
+    color: white;
+    font-size: 14px;
+    padding: 15px 30px;
+}
+
+footer .footer-footer a {
+    color: #A1D6E2;
+}
+
+footer .footer-footer a:visited, footer .footer-footer a:hover {
+    color: #1995AD;
 }
 
 .notification-panel, .server-panel, .server-options-panel {
@@ -106,7 +124,7 @@ footer {
 }
 
 .video-wrapper {
-    background-color: #F1F1F2;
+    background-color: #E4E4E5;
 }
 
 button {

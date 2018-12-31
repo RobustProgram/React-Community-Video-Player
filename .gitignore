@@ -22,3 +22,4 @@ yarn-error.log*
 
 # Design folder
 /design
+/src/images
