@@ -15,11 +15,18 @@ class ServerOptions extends Component {
     onCreateServer() {
         let serverName = document.getElementById("servername").value;
         let serverPass = document.getElementById("serverpassword").value;
+        let userName = document.getElementById("username").value;
 
-        if (serverName !== "")
-            createServer({serverName: serverName, serverPass: serverPass});
-        else
+        if (serverName !== "") {
+            if (userName !== "") {
+                createServer({serverName: serverName, serverPass: serverPass, userName: userName});
+            } else {
+                this.setState({error: true, errorMsg: "*You can not have a blank user name!"});
+            }
+
+        } else {
             this.setState({error: true, errorMsg: "*You can not have a blank server name!"});
+        }
     }
 
     render() {
@@ -43,6 +50,10 @@ class ServerOptions extends Component {
                     <div className="input-row">
                         <label for="serverpassword">Server Password</label>
                         <input id="serverpassword" type="text" name="serverpassword"/>
+                    </div>
+                    <div className="input-row">
+                        <label for="username">Messaging Name</label>
+                        <input id="username" type="text" name="username"/>
                     </div>
                 </div>
                 <div>

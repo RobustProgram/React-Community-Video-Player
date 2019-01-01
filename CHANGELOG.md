@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Changed
+- The 'Enter' key shortcut will be bound to the instant messaging system.
+
+## [0.4.0] - 2019-1-2
+### Added
+- Added the ability to chat to a room. The chat uses usernames to help
+identify which messages came from who.
+- Added more socket messages in the backend to support the ability to have
+instant messaging in rooms.
+- Added form field for a user name on the frontend.
+- Added user name support in the backend.
+
+### Changed
+- Removed the ability to press the 'Enter' key as a shortcut to load the video
+as it will be used instead for the instant messages.
+
 ## [0.3.1] - 2019-1-1
 ### Added
 - Added the ability for the bottom panel to switch between notification and

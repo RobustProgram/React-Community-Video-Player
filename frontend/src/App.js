@@ -11,6 +11,7 @@ import Header from './components/Header';
 import GitHubStrip from './components/GitHubStrip';
 import ServerOptions from './components/ServerOptions';
 import Footer from './components/Footer';
+import ChatRoom from './components/ChatRoom';
 
 // React Player
 import ReactPlayer from 'react-player'
@@ -52,9 +53,9 @@ class Notification extends Component {
     render() {
         let notifyContent = [];
         for(let item in this.state.notification)
-            notifyContent.push(<div>{this.state.notification[item]}</div>);
+            notifyContent.push(<div key={item}>{this.state.notification[item]}</div>);
         return(
-            <div>
+            <div className="notify-content">
                 {notifyContent}
             </div>
         );
@@ -83,7 +84,7 @@ class BottomPanel extends Component {
         let currentPanel = <Notification />;
 
         if (this.state.whatPanel === CHAT_PANEL)
-            currentPanel = "I am chatting!";
+            currentPanel = <ChatRoom />;
 
         if (!this.state.expanded)
             currentIcon = <FontAwesomeIcon icon="plus"/>;
@@ -162,10 +163,10 @@ class App extends Component {
         updateVideo({videoSeconds: videoSeconds, videoDuration:videoDuration});
     }
 
-    handleEnterKey(event) {
-        if(event.key === "Enter")
-            this.setVideoURL();
-    }
+    // handleEnterKey(event) {
+    //     if(event.key === "Enter")
+    //         this.setVideoURL();
+    // }
 
     componentDidUpdate(prevProps, prevState){
         // Once the components updates so that we are able to include the video
@@ -194,7 +195,7 @@ class App extends Component {
         let serverPanel = null;
 
         if (this.state.serverID !== "") {
-            document.addEventListener("keydown", this.handleEnterKey.bind(this), false);
+            // document.addEventListener("keydown", this.handleEnterKey.bind(this), false);
             serverPanel =
             <div id="server-panel" className="server-panel">
                 <div className="server-url">
@@ -220,7 +221,7 @@ class App extends Component {
                     </div>
                 </div>
                 <button className="solid" onClick={this.onForceUpdate.bind(this)}>
-                    Force Update
+                    Synchronise
                 </button>
                 {SEPARATOR}
                 <button className="solid" onClick={this.onLeaveServer.bind(this)}>
@@ -228,7 +229,7 @@ class App extends Component {
                 </button>
             </div>;
         } else {
-            document.removeEventListener("keydown", this.handleEnterKey.bind(this), false);
+            // document.removeEventListener("keydown", this.handleEnterKey.bind(this), false);
             serverPanel = <ServerOptions />;
         }
 

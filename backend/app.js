@@ -6,6 +6,7 @@ const io = require("socket.io")(server);
 // Maps the Unique ID of the room to a name, we will then use the name to store
 // the password and number of users in the room in two other separate maps.
 let serverUIDMap = {};
+let userNameUIDMap = {};
 let serverPasswordMap = {};
 let serverNumbersMap = {};
 let serverVideoMap = {};
@@ -17,6 +18,7 @@ io.on("connection", async (socket) => {
     io.to(socket.id).emit("notify", "Welcome!");
 
     socket.on("createserver", async (message) => {
+        // User wants to either create or join a server.
         console.log("Socket wants to create or join a server!");
 
         if (message["serverName"] === ""){
@@ -24,12 +26,15 @@ io.on("connection", async (socket) => {
             return;
         }
 
+        // Check if we mapped a room name to a password. If it doesn't exist,
+        // then we are creating a new server.
         if (message["serverName"] in serverPasswordMap) {
             if (message["serverPass"] == serverPasswordMap[message["serverName"]]) {
                 // Notify the room clients
                 io.to(message["serverName"]).emit('notify', "A user has joined the room!");
 
                 socket.join( message["serverName"] );
+                userNameUIDMap[socket.id] = message["userName"];
                 serverUIDMap[socket.rooms[socket.id]] = message["serverName"];
                 serverNumbersMap[message["serverName"]] =+ 1;
 
@@ -49,6 +54,7 @@ io.on("connection", async (socket) => {
             io.to(message["serverName"]).emit('notify', "A user has joined the room!");
 
             socket.join( message["serverName"] );
+            userNameUIDMap[socket.id] = message["userName"];
             serverUIDMap[socket.rooms[socket.id]] = message["serverName"];
             serverNumbersMap[message["serverName"]] = 1;
             serverVideoMap[message["serverName"]] = "";
@@ -74,6 +80,7 @@ io.on("connection", async (socket) => {
                 delete serverNumbersMap[roomName];
                 delete serverPasswordMap[roomName];
                 delete serverVideoMap[roomName];
+                delete userNameUIDMap[socket.id];
             }
             socket.leave(roomName);
         }
@@ -107,6 +114,21 @@ io.on("connection", async (socket) => {
         serverVideoMap[roomName] = message;
         io.to(roomName).emit("confirmvideo", message);
         io.to(roomName).emit('notify', "Loading new video!");
+    })
+
+    // =========================================================================
+    // Write all of the user code for messaging a room.
+
+    // "uploadmessage", when the client uploads a message to the server.
+    // "updatemessage", the server updates the connected clients to the message.
+    socket.on("uploadmessage", async (message) => {
+        let roomUID = socket.rooms[socket.id];
+        if (roomUID in serverUIDMap){
+            let roomName = serverUIDMap[roomUID];
+            io.to(roomName).emit('updatemessage', userNameUIDMap[socket.id] + " : " + message);
+        } else {
+            io.to(socket.id).emit("updatemessage", "You need to be part of a room to send a message!");
+        }
     })
 })
 

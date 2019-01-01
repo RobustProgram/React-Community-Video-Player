@@ -27,6 +27,10 @@ function confirmUpdateVideo(cb) {
     socket.on("confirmvideoupdate", (data) => { cb(data); });
 }
 
+function receiveMessageUpdate(cb) {
+    socket.on("updatemessage", (data) => { cb(data); });
+}
+
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 // Update the server
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -36,4 +40,9 @@ function leaveServer() { socket.emit("leaveserver"); }
 function loadVideo(data) { socket.emit("loadvideo" , data); }
 function updateVideo(data) { socket.emit("updatevideo" , data); }
 
-export { notify, createServer, confirmServer, leaveServer, loadVideo, updateVideo, confirmUpdateVideo, confirmVideo }
+function uploadMessage(data) { socket.emit("uploadmessage", data); }
+
+export {
+    notify, createServer, confirmServer, leaveServer, loadVideo, updateVideo,
+    confirmUpdateVideo, confirmVideo, uploadMessage, receiveMessageUpdate
+}
