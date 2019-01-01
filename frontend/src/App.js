@@ -1,133 +1,101 @@
 import React, { Component } from 'react';
-// FontAwesome imports
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faExclamationCircle, faBell } from '@fortawesome/free-solid-svg-icons'
+
 // Developer Externals
 import './App.min.css';
 import {
-    notify, createServer, confirmServer, leaveServer, loadVideo, updateVideo,
+    notify, confirmServer, leaveServer, loadVideo, updateVideo,
     confirmUpdateVideo, confirmVideo
 } from './socket';
+
+import Header from './components/Header';
+import GitHubStrip from './components/GitHubStrip';
+import ServerOptions from './components/ServerOptions';
+import Footer from './components/Footer';
+
 // React Player
 import ReactPlayer from 'react-player'
 
-library.add(faExclamationCircle);
-library.add(faBell);
+// FontAwesome imports
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faExclamationCircle, faBell, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import { faGithubSquare } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const VERSION = "0.2.5";
+library.add(faExclamationCircle, faBell, faPlus, faMinus, faGithubSquare);
 
 class Notification extends Component {
     constructor(props) {
         super(props);
-        this.state = { notification : "" };
+
+        let initial_notifications = localStorage.getItem('notifications');
+        if (initial_notifications == null)
+            this.state = { notification : [] };
+        else
+            this.state = { notification : initial_notifications };
+
         notify((message) => {
-            this.setState({notification : message});
+            // Received the message from the server
+            let notifications = this.state.notification;
+            notifications.push(message);
+            this.setState({notification:notifications});
         });
     }
 
+    componentWillUnmount() {
+        // Store the notification in memory
+        localStorage.setItem('notifications', this.state.notification);
+    }
+
     render() {
-        return (
-            <div className="notification-panel-wrapper">
-                <div className="notification-panel">
-                    <strong>Notification</strong>&nbsp; {this.state.notification}
-                </div>
+        let notifyContent = [];
+        for(let item in this.state.notification)
+            notifyContent.push(<div>{this.state.notification[item]}</div>);
+        return(
+            <div>
+                {notifyContent}
             </div>
         );
     }
 }
 
-class ServerOptions extends Component {
+const NOTIFICATION_PANEL = 0;
+const CHAT_PANEL = 1;
+
+class BottomPanel extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            error: false,
-            errorMsg: ""
-        };
-    }
-
-    onCreateServer() {
-        let serverName = document.getElementById("servername").value;
-        let serverPass = document.getElementById("serverpassword").value;
-
-        if (serverName !== "")
-            createServer({serverName: serverName, serverPass: serverPass});
-        else
-            this.setState({error: true, errorMsg: "*You can not have a blank server name!"});
+            whatPanel: NOTIFICATION_PANEL,
+            expanded: true,
+        }
     }
 
     render() {
-        let errorMsg = null;
-        if (this.state.error)
-            errorMsg = <div className="error-msg">{this.state.errorMsg}</div>
+        // We are assuming the default state of, being expanded & is looking at
+        // the notification.
+        let currentIcon = <FontAwesomeIcon icon="minus"/>;
+        let currentPanel = <Notification />;
 
-        return (
-            <div className="server-options-panel">
-                <div className="warning">
-                    <FontAwesomeIcon icon="exclamation-circle" />&nbsp;
-                    Warning! The password is not encrypted and is just a
-                    temporary passphrase to prevent random joins.
-                </div>
-                {errorMsg}
-                <div className="input-area">
-                    <div className="input-row">
-                        <label for="servername">Server Name</label>
-                        <input id="servername" type="text" name="servername"/>
-                    </div>
-                    <div className="input-row">
-                        <label for="serverpassword">Server Password</label>
-                        <input id="serverpassword" type="text" name="serverpassword"/>
-                    </div>
-                </div>
-                <div>
-                    <button className="solid" onClick={this.onCreateServer.bind(this)}>
-                        Create / Join Server
+        if (this.state.whatPanel === CHAT_PANEL)
+            currentPanel = "I am chatting!";
+
+        return(
+            <div className="bottom-panel">
+                <div className="close-wrapper">
+                    <button className="bottom-panel-close">
+                        {currentIcon}
+                    </button>
+                    <button className={this.state.whatPanel === 0 ? "selected" : ""}>
+                        NOTIFICATION
+                    </button>
+                    <button className={this.state.whatPanel === 1 ? "selected" : ""}>
+                        CHAT
                     </button>
                 </div>
+                <div className="content">
+                    {currentPanel}
+                </div>
             </div>
-        );
-    }
-}
-
-class Footer extends Component {
-    render() {
-        return(
-            <footer>
-                <div className="footer-content">
-                    <p className="text-title">
-                        About This Project
-                    </p>
-                    <p className="text-paragraph">
-                        This project allows you as the user to create a room where
-                        you can invite your friends to join to watch a video together.
-                        This room allows you to sync the videos using a button so
-                        everyone can watch the video at the same time.
-                    </p>
-                    <p className="text-paragraph">
-                        This project will be worked on to expanded to include other
-                        functionality such as,
-                        <ul>
-                            <li>Room leader as an option!</li>
-                            <li>Option to allow the room to sync pausing and playing</li>
-                            <li>Integrate a chat room</li>
-                        </ul>
-                        <strong>Current Version: {VERSION} Copyright &copy; 2019</strong>
-                    </p>
-                </div>
-                <div className="footer-footer">
-                    <div>Icons made by <a href="https://www.flaticon.com/authors/itim2101" title="itim2101">itim2101</a>, <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank" rel="noopener noreferrer">CC 3.0 BY</a></div>
-                </div>
-            </footer>
-        );
-    }
-}
-
-class Header extends Component {
-    render() {
-        return(
-            <header>
-                JARP REACT COMMUNITY VIDEO PLAYER
-            </header>
         );
     }
 }
@@ -242,9 +210,10 @@ class App extends Component {
         return (
             <div>
                 <Header />
-                <Notification />
+                <GitHubStrip />
                 {serverPanel}
                 <Footer />
+                <BottomPanel />
             </div>
         );
     }

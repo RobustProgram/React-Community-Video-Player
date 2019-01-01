@@ -63,6 +63,7 @@ footer {
     background-color: #E4E4E5;
     margin: auto;
     margin-top: 5vh;
+    margin-bottom: 150px;
     max-width: 1300px;
 }
 
@@ -85,13 +86,13 @@ footer .footer-footer a:visited, footer .footer-footer a:hover {
     color: #1995AD;
 }
 
-.notification-panel, .server-panel, .server-options-panel {
+.github-strip, .server-panel, .server-options-panel {
     max-width: 1300px;
     margin: auto;
     padding: 0vh 3vw;
 }
 
-.notification-panel div, .server-panel div, .server-options-panel div {
+.github-strip div, .server-panel div, .server-options-panel div {
     margin: 10px 0px;
 }
 
@@ -99,10 +100,11 @@ footer .footer-footer a:visited, footer .footer-footer a:hover {
     margin-top: 5vh;
 }
 
-.notification-panel-wrapper {
+.github-strip-wrapper {
     background-color: #A1D6E2;
     padding: 20px;
     text-align: center;
+    vertical-align: middle;
 }
 
 .server-panel {
@@ -125,6 +127,50 @@ footer .footer-footer a:visited, footer .footer-footer a:hover {
 
 .video-wrapper {
     background-color: #E4E4E5;
+}
+
+.bottom-panel {
+    background-color: #E4E4E5;
+    position: fixed;
+    bottom: 0;
+    height: 150px;
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+}
+
+.bottom-panel .close-wrapper {
+    background-color: black;
+}
+
+.bottom-panel .close-wrapper .bottom-panel-close {
+    background: #af1d1d;
+    padding: 6px;
+}
+
+.bottom-panel .close-wrapper button {
+    background: none;
+    color: white;
+    text-decoration: none;
+    margin-right: 15px;
+    font-weight: bold;
+}
+
+.bottom-panel .close-wrapper button:hover {
+    color: #888;
+}
+
+.bottom-panel .close-wrapper .selected {
+    color: #888;
+}
+
+.bottom-panel .close-wrapper .selected:hover {
+    cursor: default;
+}
+
+.bottom-panel .content {
+    overflow-y: scroll;
+    flex-grow: 1;
 }
 
 button {
@@ -150,4 +196,13 @@ button:hover {
     -moz-box-shadow: 0 3px 7px #555;
     box-shadow: 0 3px 7px #555;
     background-color: #1995AD;
+}
+
+.github-link {
+    color: black;
+    text-decoration: none;
+}
+
+.github-link:hover {
+    color: #1995AD;
 }

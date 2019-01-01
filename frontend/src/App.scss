@@ -81,6 +81,7 @@ footer {
     background-color: $background-colour;
     margin: auto;
     margin-top: 5vh;
+    margin-bottom: 150px;
     max-width: 1300px;
     .footer-content, .footer-footer{padding: 15px 30px;}
     .footer-footer{
@@ -97,7 +98,7 @@ footer {
 // Notification panel classes
 // xxxxxxxxxxxxxxxxxxxxxxxxxx
 
-.notification-panel, .server-panel, .server-options-panel{
+.github-strip, .server-panel, .server-options-panel{
     max-width: 1300px;
     margin: auto;
     padding: 0vh 3vw;
@@ -106,10 +107,11 @@ footer {
 
 .server-options-panel{margin-top: 5vh;}
 
-.notification-panel-wrapper{
+.github-strip-wrapper{
     background-color: $primary-colour;
     padding: 20px;
     text-align: center;
+    vertical-align: middle;
 }
 
 .server-panel{text-align: center;}
@@ -129,12 +131,46 @@ footer {
 
 .server-url{ input{ width: 50%; } }
 
-//
+// Video Wrapper Style
 
 .video-wrapper{background-color: $background-colour;}
 
 // xxxxxxxxxxxxxxxxxxxxxxxxxx
-// Button Styles
+// Bottom Panel Styles
+// xxxxxxxxxxxxxxxxxxxxxxxxxx
+
+.bottom-panel{
+    background-color: $background-colour;
+    position: fixed;
+    bottom: 0;
+    height: 150px;
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    .close-wrapper{
+        background-color: black;
+        .bottom-panel-close{background: $primary-red;padding: 6px;}
+        button{
+            background: none;
+            color: white;
+            text-decoration: none;
+            margin-right: 15px;
+            font-weight: bold;
+            &:hover{color: #888;}
+        }
+        .selected{
+            color: #888;
+            &:hover{cursor: default;}
+        }
+    }
+    .content{
+        overflow-y: scroll;
+        flex-grow : 1;
+    }
+}
+
+// xxxxxxxxxxxxxxxxxxxxxxxxxx
+// Button / Anchor Styles
 // xxxxxxxxxxxxxxxxxxxxxxxxxx
 
 button{
@@ -152,4 +188,10 @@ button{
         @include box-shadow(0, 3px, 7px, #555);
         background-color: $primary-heavy;
     }
+}
+
+.github-link{
+    color: black;
+    text-decoration: none;
+    &:hover{color: $primary-heavy;}
 }

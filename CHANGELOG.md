@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2019-1-1
+### Added
+- Created a bottom panel to house the notification and chat functionality that
+you can switch between.
+
+### Changed
+- Moved the separate components into their own files to keep the code clean.
+- Moved the entire notification area into the bottom panel.
+- The notification area will now store previous notifications instead of
+replacing the previous one with the new notification.
+- Added a message to link to the Github page to replace the notification area.
+
 ## [0.2.5] - 2018-12-31
 ### Added
 - When user joins a room, they will be updated to watch that video.

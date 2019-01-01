@@ -26,11 +26,13 @@ io.on("connection", async (socket) => {
 
         if (message["serverName"] in serverPasswordMap) {
             if (message["serverPass"] == serverPasswordMap[message["serverName"]]) {
+                // Notify the room clients
+                io.to(message["serverName"]).emit('notify', "A user has joined the room!");
+
                 socket.join( message["serverName"] );
                 serverUIDMap[socket.rooms[socket.id]] = message["serverName"];
                 serverNumbersMap[message["serverName"]] =+ 1;
-                // Notify the room clients
-                io.to(message["serverName"]).emit('notify', "A user has joined the room!");
+
                 // Now notify the user
                 io.to(socket.id).emit("notify", "You joined the room " + message["serverName"]);
                 io.to(socket.id).emit("confirmserver", message["serverName"]);
@@ -42,12 +44,16 @@ io.on("connection", async (socket) => {
             // This section of code will run for the initial creation of the room
             // so everything in this section of code should be initialisers.
             serverPasswordMap[message["serverName"]] = message["serverPass"];
+
+            // Before the user joins the room. Notify the room first.
+            io.to(message["serverName"]).emit('notify', "A user has joined the room!");
+
             socket.join( message["serverName"] );
             serverUIDMap[socket.rooms[socket.id]] = message["serverName"];
             serverNumbersMap[message["serverName"]] = 1;
             serverVideoMap[message["serverName"]] = "";
-            // Notify the users
-            io.to(message["serverName"]).emit('notify', "A user has joined the room!");
+
+            // Notify the client
             io.to(socket.id).emit("notify", "You joined the room " + message["serverName"]);
             io.to(socket.id).emit("confirmserver", message["serverName"]);
         }
@@ -74,8 +80,6 @@ io.on("connection", async (socket) => {
     }
 
     socket.on("updatevideo", async (message) => {
-        //console.log("Updating video");
-        //console.log(message);
         let roomUID = socket.rooms[socket.id];
 
         if (roomUID in serverUIDMap){
