@@ -143,13 +143,16 @@ footer {
     background-color: $background-colour;
     position: fixed;
     bottom: 0;
-    height: 150px;
+    // height: 150px;
     width: 100%;
     display: flex;
     flex-flow: column;
     .close-wrapper{
         background-color: black;
-        .bottom-panel-close{background: $primary-red;padding: 6px;}
+        .bottom-panel-close{
+            background: $primary-red;padding: 6px;
+            &:hover{color: black;}
+        }
         button{
             background: none;
             color: white;
@@ -157,10 +160,10 @@ footer {
             margin-right: 15px;
             font-weight: bold;
             &:hover{color: #888;}
-        }
-        .selected{
-            color: #888;
-            &:hover{cursor: default;}
+            &:disabled{
+                color: #888;
+                &:hover{cursor: default;}
+            }
         }
     }
     .content{
@@ -168,6 +171,31 @@ footer {
         flex-grow : 1;
     }
 }
+
+// ----- ANIMATION -----
+// When the pages load
+.expand-appear { height: 0px; }
+.expand-appear.expand-appear-active {
+    height: 150px;
+    transition: height 300ms ease-in-out;
+}
+// Being expanded
+.expand-enter { height: 0px; }
+.expand-enter.expand-enter-active {
+    height: 150px;
+    transition: height 300ms ease-in-out;
+}
+.expand-enter-done{
+    height: 150px;
+}
+// Being compressed
+.expand-exit { height: 150px; }
+.expand-exit.expand-exit-active {
+    height: 0px;
+    transition: height 300ms ease-in-out;
+}
+.expand-exit-done { height: 0px; }
+
 
 // xxxxxxxxxxxxxxxxxxxxxxxxxx
 // Button / Anchor Styles

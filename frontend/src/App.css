@@ -133,7 +133,6 @@ footer .footer-footer a:visited, footer .footer-footer a:hover {
     background-color: #E4E4E5;
     position: fixed;
     bottom: 0;
-    height: 150px;
     width: 100%;
     display: flex;
     flex-flow: column;
@@ -148,6 +147,10 @@ footer .footer-footer a:visited, footer .footer-footer a:hover {
     padding: 6px;
 }
 
+.bottom-panel .close-wrapper .bottom-panel-close:hover {
+    color: black;
+}
+
 .bottom-panel .close-wrapper button {
     background: none;
     color: white;
@@ -160,17 +163,52 @@ footer .footer-footer a:visited, footer .footer-footer a:hover {
     color: #888;
 }
 
-.bottom-panel .close-wrapper .selected {
+.bottom-panel .close-wrapper button:disabled {
     color: #888;
 }
 
-.bottom-panel .close-wrapper .selected:hover {
+.bottom-panel .close-wrapper button:disabled:hover {
     cursor: default;
 }
 
 .bottom-panel .content {
     overflow-y: scroll;
     flex-grow: 1;
+}
+
+.expand-appear {
+    height: 0px;
+}
+
+.expand-appear.expand-appear-active {
+    height: 150px;
+    transition: height 300ms ease-in-out;
+}
+
+.expand-enter {
+    height: 0px;
+}
+
+.expand-enter.expand-enter-active {
+    height: 150px;
+    transition: height 300ms ease-in-out;
+}
+
+.expand-enter-done {
+    height: 150px;
+}
+
+.expand-exit {
+    height: 150px;
+}
+
+.expand-exit.expand-exit-active {
+    height: 0px;
+    transition: height 300ms ease-in-out;
+}
+
+.expand-exit-done {
+    height: 0px;
 }
 
 button {

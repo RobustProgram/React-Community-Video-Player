@@ -21,13 +21,16 @@ import { faExclamationCircle, faBell, faPlus, faMinus } from '@fortawesome/free-
 import { faGithubSquare } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+// React Transition
+import { CSSTransition } from 'react-transition-group';
+
 library.add(faExclamationCircle, faBell, faPlus, faMinus, faGithubSquare);
 
 class Notification extends Component {
     constructor(props) {
         super(props);
 
-        let initial_notifications = localStorage.getItem('notifications');
+        let initial_notifications = JSON.parse(localStorage.getItem('notifications'));
         if (initial_notifications == null)
             this.state = { notification : [] };
         else
@@ -43,7 +46,7 @@ class Notification extends Component {
 
     componentWillUnmount() {
         // Store the notification in memory
-        localStorage.setItem('notifications', this.state.notification);
+        localStorage.setItem('notifications', JSON.stringify(this.state.notification));
     }
 
     render() {
@@ -70,6 +73,9 @@ class BottomPanel extends Component {
         }
     }
 
+    switchToPanel(type) { this.setState({whatPanel:type}); }
+    expandPanel(){ this.setState({expanded: !this.state.expanded}); }
+
     render() {
         // We are assuming the default state of, being expanded & is looking at
         // the notification.
@@ -79,22 +85,40 @@ class BottomPanel extends Component {
         if (this.state.whatPanel === CHAT_PANEL)
             currentPanel = "I am chatting!";
 
+        if (!this.state.expanded)
+            currentIcon = <FontAwesomeIcon icon="plus"/>;
+
         return(
             <div className="bottom-panel">
                 <div className="close-wrapper">
-                    <button className="bottom-panel-close">
+                    <button
+                        onClick={this.expandPanel.bind(this)}
+                        className="bottom-panel-close">
                         {currentIcon}
                     </button>
-                    <button className={this.state.whatPanel === 0 ? "selected" : ""}>
+                    <button
+                        onClick={this.switchToPanel.bind(this, NOTIFICATION_PANEL)}
+                        disabled={this.state.whatPanel === NOTIFICATION_PANEL ? true : false}
+                    >
                         NOTIFICATION
                     </button>
-                    <button className={this.state.whatPanel === 1 ? "selected" : ""}>
+                    <button
+                        onClick={this.switchToPanel.bind(this, CHAT_PANEL)}
+                        disabled={this.state.whatPanel === CHAT_PANEL ? true : false}
+                    >
                         CHAT
                     </button>
                 </div>
-                <div className="content">
-                    {currentPanel}
-                </div>
+                <CSSTransition
+                    in={this.state.expanded}
+                    appear={true}
+                    timeout={300}
+                    classNames="expand"
+                >
+                    <div className="content">
+                        {currentPanel}
+                    </div>
+                </CSSTransition>
             </div>
         );
     }
@@ -111,6 +135,7 @@ class App extends Component {
             "height" : "720px",
         };
         this.videoPlayer = React.createRef();
+        localStorage.clear();
 
         confirmServer((serverID) => {this.setState({ "serverID" : serverID});});
         confirmVideo((videoURL) => {this.setState({ "videoURL" : videoURL});});

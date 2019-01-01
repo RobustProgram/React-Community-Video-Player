@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-const VERSION = "0.3.0";
+const VERSION = "0.3.1";
 
 class Footer extends Component {
     render() {
